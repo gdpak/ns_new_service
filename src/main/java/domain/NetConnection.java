@@ -56,43 +56,51 @@ class vl {
 
 class nc {
 	String vnfcID;
-	List<vl> vllist;
-	List<cp> cplist;
+	List<cp> ConnectionPointDataList;
+	List<vl> VirtualLinkList;
+	
 	public nc() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public nc(String vnfcID, List<vl> vllist, List<cp> cplist) {
+
+	public nc(String vnfcID, List<cp> connectionPointDataList, List<vl> virtualLinkList) {
 		super();
 		this.vnfcID = vnfcID;
-		this.vllist = vllist;
-		this.cplist = cplist;
+		ConnectionPointDataList = connectionPointDataList;
+		VirtualLinkList = virtualLinkList;
 	}
+
 	public String getVnfcID() {
 		return vnfcID;
 	}
+
 	public void setVnfcID(String vnfcID) {
 		this.vnfcID = vnfcID;
 	}
-	public List<vl> getVllist() {
-		return vllist;
+
+	public List<cp> getConnectionPointDataList() {
+		return ConnectionPointDataList;
 	}
-	public void setVllist(List<vl> vllist) {
-		this.vllist = vllist;
+
+	public void setConnectionPointDataList(List<cp> connectionPointDataList) {
+		ConnectionPointDataList = connectionPointDataList;
 	}
-	public List<cp> getCplist() {
-		return cplist;
+
+	public List<vl> getVirtualLinkList() {
+		return VirtualLinkList;
 	}
-	public void setCplist(List<cp> cplist) {
-		this.cplist = cplist;
+
+	public void setVirtualLinkList(List<vl> virtualLinkList) {
+		VirtualLinkList = virtualLinkList;
 	}
-	
-	
 }
+
 @XmlRootElement
 public class NetConnection {
-	List<nc> networkConnectionInfo;
+	String networkConnectionID;
 	String vnfID;
+	List<nc> networkConnectionInfo;
     String uuid;
     Date time_created;
     
@@ -108,6 +116,14 @@ public class NetConnection {
 		this.networkConnectionInfo = networkConnectionInfo;
 		this.uuid = UUID.randomUUID().toString();
 		this.time_created = new Date();
+	}
+
+	public String getNetworkConnectionID() {
+		return networkConnectionID;
+	}
+
+	public void setNetworkConnectionID(String networkConnectionID) {
+		this.networkConnectionID = networkConnectionID;
 	}
 
 	public List<nc> getNetworkConnectionInfo() {

@@ -1,6 +1,5 @@
 package domain;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +19,13 @@ public class NetConnectionDb {
 	public void add(NetConnection nc, String vnfID) {
 		nc.setVnfID(vnfID);
 		ncdb.add(nc);
-		System.out.printf("vnfID = %s", vnfID);
+		System.out.printf("vnfID = %s\n", vnfID);
+	}
+	public void add_static(NetConnection nc, String vnfID, String ncID) {
+		nc.setVnfID(vnfID);
+		nc.setNetworkConnectionID(ncID);
+		ncdb.add(nc);
+		System.out.printf("vnfID = %s\n", vnfID);
 	}
 	
 	public void remove(NetConnection nc) {
@@ -28,14 +33,17 @@ public class NetConnectionDb {
 	
 	}
 	
-	public NetConnection find(String vnfID) {
+	public NetConnection find(String vnfID, String netConnectionID) {
 		Iterator<NetConnection> it = ncdb.iterator();
 		System.out.printf("called find");
 		while (it.hasNext()) {
 			NetConnection current = it.next();
-			System.out.printf("vnfID1 = %s, vnfID2=%s", vnfID, current.getVnfID());
+			System.out.printf("vnfID(arg) = %s, vnfID(DB)=%s\n", vnfID, current.getVnfID());
+			System.out.printf("netcID(arg) = %s, netcID(DB)=%s\n", netConnectionID, current.getNetworkConnectionID());
 			if (current.getVnfID().equals(vnfID)) {
-				return (current);
+				if (current.getNetworkConnectionID().equals(netConnectionID)) {
+					return (current);
+				}
 			}
 		}
 		return null;

@@ -54,9 +54,9 @@ public class NSRestService {
 	 * @GET - Get a NC by its name
 	 */
 	@GET
-	@Path("/nc/{name}")
-	public Response get_nc(@PathParam("name") String name, @QueryParam("type") String type) {
-		NetConnection nc = NetConnectionManager.find(name);
+	@Path("/nc")
+	public Response get_nc(@QueryParam("vnfID") String vnfID, @QueryParam("networkConnectionID") String ncID, @QueryParam("type") String type) {
+		NetConnection nc = NetConnectionManager.find(vnfID, ncID);
 		if (nc == null)
 			throw new NotFoundException();
 		return Response
@@ -69,10 +69,10 @@ public class NSRestService {
 	 */
 	@PUT
 	@Path("nc")
-	public Response update_nc(NetConnection nc) {
+	public Response update_nc(NetConnection nc, @QueryParam("vnfID") String vnfID, @QueryParam("networkConnectionID") String ncID) {
 		if (nc == null)
 			throw new BadRequestException();
-		NetConnectionManager.update(nc);
+		NetConnectionManager.update(nc, vnfID, ncID);
 		URI uri = uriInfo.getAbsolutePathBuilder()
 				.path(String.valueOf(nc.getVnfID()))
 				.build();
@@ -83,13 +83,13 @@ public class NSRestService {
 	 * Delete a NC
 	 */
 	@DELETE
-	@Path("/nc/{name}")
-	public Response delete_nc(@PathParam("name") String name, @QueryParam("type") String type) {
-		NetConnection nc = NetConnectionManager.find(name);
+	@Path("/nc")
+	public Response delete_nc(@QueryParam("vnfID") String vnfID, @QueryParam("networkConnectionID") String ncID) {
+		NetConnection nc = NetConnectionManager.find(vnfID, ncID);
 		if (nc == null) {
 			throw new NotFoundException();
 		}
-		NetConnectionManager.delete(name);
+		NetConnectionManager.delete(vnfID, ncID);
 		return Response.noContent().build();
 	}
 	
